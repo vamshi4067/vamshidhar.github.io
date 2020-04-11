@@ -98,25 +98,8 @@ author:
   bio              : "Data Scientist/Data Analyst"
   location         : "Aldie VA"
   email            : "gunnalavamshi@gmail.com"
-  links:
-    - label: "Email"
-      icon: "fas fa-fw fa-envelope-square"
-      # url: mailto:"gunnalavamshi@gmail.com"
-    - label: "Website"
-      icon: "fas fa-fw fa-link"
-      # url: "https://your-website.com"
-    - label: "Twitter"
-      icon: "fab fa-fw fa-twitter-square"
-      # url: "https://twitter.com/"
-    - label: "Facebook"
-      icon: "fab fa-fw fa-facebook-square"
-      # url: "https://facebook.com/"
-    - label: "GitHub"
-      icon: "fab fa-fw fa-github"
-      # url: "https://github.com/vamshi4067"
-    - label: "Instagram"
-      icon: "fab fa-fw fa-instagram"
-      # url: "https://instagram.com/"
+  github           : "vamshi4067"
+  linkedin         : "gunnalavamshi@gmai.com"
 
 # Site Footer
 footer:
@@ -292,4 +275,3 @@ defaults:
       comments: # true
       share: true
       related: true
-       
