@@ -94,7 +94,7 @@ analytics:
 # Site Author
 author:
   name             : "Vamshidhar Reddy Gunnala"
-  avatar           : # path of avatar image, e.g. "/Users/vamshi/Desktop/vamshidhar.github.io/images/IMG_3164.jpg"
+  avatar           : "/Users/vamshi/Desktop/vamshidhar.github.io/images/IMG_3164.jpg"
   bio              : "Data Scientist/Data Analyst"
   location         : "Aldie VA"
   email            : "gunnalavamshi@gmail.com"
