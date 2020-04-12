@@ -1,8 +1,8 @@
 ---
-title:"About"
+title: "About"
 permalink: /about/
 header:
-  image:"/Users/vamshi/Desktop/vamshidhar.github.io/images/image2.jpg"
+  image: "/Users/vamshi/Desktop/vamshidhar.github.io/images/image2.jpg"
 ---
 
 I am currently pursuing my Master's in Data Analytics Engineering at George Mason University.I am a Data Science Enthusiast and
