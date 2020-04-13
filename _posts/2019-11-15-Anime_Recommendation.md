@@ -30,7 +30,7 @@ rating['User_rating'] = rating['User_rating'].replace(-1,np.nan)
 rating = rating.dropna()
 ```
 
-Defining the definition of like by calculating mean of rating¶
+Defining the definition of like by calculating mean of rating
 ```python
 mrpu = rating.groupby('user_id').mean().reset_index()
 mrpu.drop('anime_id',axis=1,inplace=True)
