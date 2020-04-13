@@ -1,6 +1,6 @@
 ---
 layout: archive
-permalink: /projects/
+permalink: /projects/Anime Recommendation
 title: "Anime Recommendation"
 author_profile: true
 header:
