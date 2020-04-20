@@ -1,10 +1,9 @@
 ---
 title: "Anime Recommendation"
 date: 2019-08-15
+
 header:
   image: "images/image2.jpg"
-mathjax: "true"
-
 ---
 
 Created a recommendation system using K-Nearest Neighbor and other algorithms where a user can be recommended various shows and genres based on the user rating and user count.
@@ -70,6 +69,56 @@ predictions = best_model.predict(total_data.iloc[:,[0,4,5,6,7,8,9]])
 total_data['cluster'] = predictions
 total_data[total_data['cluster']==4]
 ```
+```python
+from wordcloud import WordCloud
+
+def makeCloud(Dict,name,color):
+    words = dict()
+
+    for s in Dict:
+        words[s[0]] = s[1]
+
+        wordcloud = WordCloud(
+                      width=1500,
+                      height=500,
+                      background_color=color,
+                      max_words=20,
+                      max_font_size=500,
+                      normalize_plurals=False)
+        wordcloud.generate_from_frequencies(words)
+
+
+    fig = plt.figure(figsize=(12, 8))
+    plt.title(name)
+    plt.imshow(wordcloud)
+    plt.axis('off')
+
+    plt.show()
+In [119]:
+def count_word(df, ref_col, liste):
+    keyword_count = dict()
+    for s in liste: keyword_count[s] = 0
+    for liste_keywords in df[ref_col].str.split(','):        
+        if type(liste_keywords) == float and pd.isnull(liste_keywords): continue        
+        for s in [s for s in liste_keywords if s in liste]:
+            if pd.notnull(s): keyword_count[s] += 1
+
+    keyword_occurences = []
+    for k,v in keyword_count.items():
+        keyword_occurences.append([k,v])
+    keyword_occurences.sort(key = lambda x:x[1], reverse = True)
+    return keyword_occurences, keyword_count
+In [120]:
+set_keywords = set()
+for liste_keywords in total_data['genre'].str.split(',').values:
+    if isinstance(liste_keywords, float): continue  
+    set_keywords = set_keywords.union(liste_keywords)
+Favorite genre for these clusters
+
+In [130]:
+#cluster 1
+keyword_occurences, dum = count_word(total_data[total_data['cluster']==0], 'genre', set_keywords)
+makeCloud(keyword_occurences[0:10],"cluster 1","lemonchiffon")
 
 Given the name of the show predicting some shows for recommending to the user
 ```python
