@@ -1,7 +1,6 @@
 ---
 title: "Anime Recommendation"
 date: 2019-08-15
-excerpt: "Projects"
 
 ---
 
