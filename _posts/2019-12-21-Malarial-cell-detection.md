@@ -257,7 +257,7 @@ Epoch 2, Batch 101 loss: 0.414743
 Epoch 2, Batch 201 loss: 0.466714
 Epoch: 2 	Training Loss: 0.466708 	Validation Loss: 0.603988
 ```
-# Testing the data
+Testing the data
 ```python
 pretr_model.load_state_dict(torch.load('trained_model'))
 <All keys matched successfully>
@@ -297,7 +297,6 @@ Test Accuracy: 83% (6887/8268)
 ```
 Visualize 10 predictions
 ```python
-
 def imshow(inp, title=None):
     """Imshow for Tensor."""
     inp = inp.numpy().transpose((1, 2, 0))
