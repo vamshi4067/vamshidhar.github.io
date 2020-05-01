@@ -3,6 +3,9 @@ title: "Malaria cell Detection"
 date: 2019-12-21
 tag: [Deep Learning,PyTorch]
 ---
+#Detecting the cells effected from malaria so that the infected person can be informed at the initial stages of the infection before it turns endemic using Deep Learning
+
+
 #importing the libraries
 
 ```python
