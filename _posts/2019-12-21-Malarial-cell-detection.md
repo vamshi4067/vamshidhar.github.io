@@ -261,7 +261,6 @@ Testing the data
 ```python
 pretr_model.load_state_dict(torch.load('trained_model'))
 <All keys matched successfully>
-In [18]:
 def test(model, criterion, use_cuda):
 
     # monitor test loss and accuracy
