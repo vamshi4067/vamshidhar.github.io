@@ -3,10 +3,10 @@ title: "Malaria cell Detection"
 date: 2019-12-21
 tag: [Deep Learning,PyTorch]
 ---
-#Detecting the cells effected from malaria so that the infected person can be informed at the initial stages of the infection before it turns endemic using Deep Learning
+# Detecting the cells effected from malaria so that the infected person can be informed at the initial stages of the infection before it turns endemic using Deep Learning
 
 
-#importing the libraries
+# importing the libraries
 
 ```python
 
@@ -30,14 +30,14 @@ import torch.utils.data as utils
 ```
 
 Reading image files from the directory and creating the input and labels array
-#converting to image size of 50*50
+# converting to image size of 50*50
 ```python
 
 shape = 50
 images = []
 labels = []
 ```
-#infected cells
+# infected cells
 ```python
 path = '/Users/vamshi/Desktop/cell_images/'
 infected_path = path+'Parasitized/'
@@ -59,7 +59,7 @@ for file in listdir(uninfected_path):
         images.append(image)
         labels.append(0)
         ```
-#Shuffle cell images and their labels
+# Shuffle cell images and their labels
 ```python
 def reorder(old_list,order):
     new_list = []
@@ -74,7 +74,7 @@ index = index.tolist()
 labels = reorder(labels,index)
 images = reorder(images,index)
 ```
-#Visualizing first 10 images in dataset along with their labels
+# Visualizing first 10 images in dataset along with their labels
 ```python
 def display_images(image_array,label):
     fig,axes = plt.subplots(2,5,figsize=(20,5))
@@ -93,7 +93,7 @@ labels = np.array(labels)
 print(images.shape,labels.shape)
 (27558, 50, 50, 3) (27558,)
 ```
-#Convert to tensors and apply transforms
+# Convert to tensors and apply transforms
 ```python
 train_transforms = transforms.Compose([transforms.RandomRotation(30),
                                        transforms.RandomResizedCrop(224),
@@ -116,7 +116,7 @@ validation_transforms = transforms.Compose([transforms.Resize(256),
 img_dir='/Users/vamshi/Desktop/cell_images/'
 train_data = datasets.ImageFolder(img_dir,transform=train_transforms)
 ```
-#Splitting the data into train, test and validation set
+# Splitting the data into train, test and validation set
 ```python
 
 valid_size = 0.2
@@ -130,7 +130,7 @@ valid_idx, test_idx, train_idx = index[:valid_split], index[valid_split:test_spl
 print(len(valid_idx), len(test_idx), len(train_idx))
 5511 8268 13779
 ```
-#Loading into dataloaders
+# Loading into dataloaders
 ```python
 train_sampler = SubsetRandomSampler(train_idx)
 valid_sampler = SubsetRandomSampler(valid_idx)
@@ -143,18 +143,18 @@ valid_loader = torch.utils.data.DataLoader(train_data, batch_size=32,
 test_loader = torch.utils.data.DataLoader(train_data, batch_size=20,
     sampler=test_sampler)
     ```
-#Creating a pre-trained model Resnet18
+# Creating a pre-trained model Resnet18
 ```python
 pretr_model = models.resnet18(pretrained=True)
 pretr_model
 pretr_model.fc
 Linear(in_features=512, out_features=1000, bias=True)
 ```
-#Changing the last layer so that it can be used for binary classification i.e infected or uninfected
+# Changing the last layer so that it can be used for binary classification i.e infected or uninfected
 ```python
 pretr_model.fc = nn.Linear(512,2)
 ```
-#Turning on learning for parameters in last layer only
+# Turning on learning for parameters in last layer only
 ```python
 for params in pretr_model.parameters():
     params.requires_grad = False
@@ -177,7 +177,7 @@ criterion = nn.CrossEntropyLoss()
 ```python
 optimizer_ft = optim.SGD(params_to_train, lr=0.01, momentum=0.9)
 ```
-#Defining Training Function
+# Defining Training Function
 ```python
 
 def train(n_epochs, model, optimizer, criterion, use_cuda,save_path):
@@ -245,7 +245,7 @@ def train(n_epochs, model, optimizer, criterion, use_cuda,save_path):
     # return trained model
     return model
     ```
-#Training the model
+# Training the model
 ```python
 train(2,pretr_model,optimizer_ft,criterion,use_gpu,'trained_model')
 Epoch 1, Batch 1 loss: 0.721161
@@ -258,7 +258,7 @@ Epoch 2, Batch 101 loss: 0.414743
 Epoch 2, Batch 201 loss: 0.466714
 Epoch: 2 	Training Loss: 0.466708 	Validation Loss: 0.603988
 ```
-#Testing the data
+# Testing the data
 ```python
 pretr_model.load_state_dict(torch.load('trained_model'))
 <All keys matched successfully>
@@ -296,7 +296,7 @@ Test Loss: 0.400527
 
 Test Accuracy: 83% (6887/8268)
 ```
-#Visualize 10 predictions
+# Visualize 10 predictions
 ```python
 
 def imshow(inp, title=None):
