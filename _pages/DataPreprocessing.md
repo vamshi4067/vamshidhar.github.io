@@ -4,7 +4,7 @@ permalink: /data-preprocessing/
 excerpt: ""
 author_profile: true
 header:
-  overlay_image	: "images/image2.jpg"
+  overlay_image	: "images/image11.jpeg"
 
 
 
