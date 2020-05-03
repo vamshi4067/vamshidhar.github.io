@@ -7,17 +7,17 @@ tag: [R]
 # Predictive modelling on Youngster's Age
 Reading the data
 
-```r
+```{r}
 young <- read.csv(file.choose(),na.strings = c('',"NA"))
 ```
 Understanding the Data
-```r
+```{r}
 summary(young)
 sum(is.na(young))
 na.omit(young)
 ```
 To remove null values
-```r
+```{r}
 young1 <- young[complete.cases(young), ]
 summary(young1)
 par(mfrow = c(4,4))
@@ -26,7 +26,7 @@ for (i in 1:16){
 ```
 
 Pre-processing
-```r
+```{r}
 library(VIM)
 young2 <- kNN(young)
 young2 <- young2[,c(1:150)];
@@ -62,14 +62,14 @@ coefficients(back)
 summary(back)
 ```
 Accuracy of the model
-```r
+```{r}
 library(caret)
 ctrl <- trainControl(method = "cv", number = 10)
 ac_model1 <- train(x = training[,c('Pop','Hiphop..Rap','Swing..Jazz','Mathematics','Chemistry','Foreign.languages','Gardening','Alcohol','Elections','Judgment.calls','Compassion.to.animals','Changing.the.past','Parents..advice','Questionnaires.or.polls','Weight','Education')], y = training[,'Age'], method = "lm", trControl = ctrl)
 ac_model1
 ```
-for model1 with selected variables and all variables
-```r
+For model1 with selected variables and all variables
+```{r}
 mean((young2$Age-predict(back,young2))[-trainindex]^2)
 mean((young2$Age-predict(model,young2))[-trainindex]^2)
 AIC(back)
@@ -78,7 +78,7 @@ AIC(model)
 BIC(model)
 ```
 Applying PCA on all variables and finding the factor variables in data frame
-```r
+```{r}
 young3 <- young2
 str(young3)
 rm_nam <- names(Filter(is.factor,young3))
@@ -112,24 +112,24 @@ sd <- young4$sdev
 var <- sd^2
 ```
 Higher the varience more is the information contained in PCA
-```r
+```{r}
 propvar <- var/sum(var)
 propvar[1:10]
 ```
 Deciding number of PCA's for modelling by finding % of variance explained by the models
-```r
+```{r}
 plot(cumsum(propvar),xlab='Principal Component',ylab='Cummulative Sum of Percent of varience explained')
 Therefore ffrom the plot we see that 100 components can explain about 90% variemce in the data
 ```
 Now Number of components are reduced to 100 from 139
-```r
+```{r}
 pr_train <- data.frame(Age=pca_train$Age,young4$x)
 #First 100 PC's are selected
 pr_train <- pr_train[,1:101]
 ```
 
 Model using random forest
-```r
+```{r}
 library(randomForest)
 rf_model <- randomForest(Age~.,data = pr_train)
 rf_model
@@ -139,13 +139,13 @@ ctrl <- trainControl(method = "cv", number = 10)
 rf2 <- train(x = pr_train[,-1], y = pr_train[,1], method = "rf", trControl = ctrl)
 ```
 Transform test into PCA
-```r
+```{r}
 pr_test <- predict(young4,newdata = pca_test)
 pr_test <- as.data.frame(pr_test)
 names(pr_test)
 ```
 Select first 100 Pc's from test
-```r
+```{r}
 pr_test <- pr_test[,1:100]
 result <- predict(rf_model,pr_test)
 result <- as.integer(result)
@@ -156,7 +156,7 @@ MSE
 ```
 MODELLING
 Using Linear regression for model
-```r
+```{r}
 pca_lm <- lm(Age~.,data=pr_train)
 summary(pca_lm)
 lm_res <- predict(pca_lm,pr_test)
@@ -172,7 +172,7 @@ plot(back)
 plot(model)
 ```
 Randomforest regression for age
-```r
+```{r}
 set.seed(12345)
 irf <- randomForest(Age ~ Education+Weight+Elections, data=young2, importance=TRUE,
                     proximity=TRUE)
@@ -180,7 +180,7 @@ print(irf)
 plot(irf)
 ```
 Treee regression for age
-```r
+```{r}
 library(tree)
 set.seed(12345)
 tr<-tree(Age ~ Education+Weight+Elections, data=young2, method = "class")
@@ -196,11 +196,11 @@ summary(fit) # show results
 plot(fit)
 ```
 Correlation for age
-```r
+```{r}
 cor(young)
 ```
 Comparing the model
-```r
+```{r}
 fit1 <- lm(Age ~ Education+Weight+Elections+Gardening, data=young2)
 fit2 <- lm(Age ~ Education+Weight+Election ,data=young2)
 anova(fit1, fit2)
@@ -211,12 +211,12 @@ plot(fit) # plot results
 summary(fit) # display the best model
 ```
 Converting eduction as factor
-```r
+```{r}
 df$young2.Education=as.integer(as.factor(df$young2.Education))
 table(young2$Education)
 ```
 cluster
-```r
+```{r}
 
 df=data.frame(young2$Age,young2$Education,young2$Weight)
 install.packages("cluster")
@@ -230,12 +230,12 @@ library(tidyverse)
 dat <- df[1:100, ] # without known classification
 ```
 Kmeans clustre analysis
-```r
+```{r}
 clus <- kmeans(dat, centers=6)
 ```
 
 Scatterplot
-```r
+```{r}
 library(ggplot2)
 ggplot(df,aes(x=young2.Age,y=young2.Weight,col=young2.Education) )+geom_point()
 df2=data.frame(young2$Questionnaires.or.polls,young2$Mood.swings,young2$Elections,young2$Foreign.languages)
@@ -244,7 +244,7 @@ clus2<- kmeans(dat2, centers=5)
 fviz_cluster(clus2, data = dat)
 ```
 SVM
-```r
+```{r}
 library(e1071)
 pr_test1 <- as.data.frame(pr_test, Age = young3$Age)
 
@@ -253,7 +253,7 @@ modelsvm <- svm(Age~.,pr_train)
 summary(modelsvm)
 ```
 Predict using SVM regression
-```r
+```{r}
 predYsvm <- predict( modelsvm, pr_test)
 
 lsvm_resvalue <- data.frame(Actual = validation$Age,Predicted = predYsvm)
@@ -267,7 +267,7 @@ tuneResult1 <- tune(svm, Age~.,  data = pr_train,
 plot(tuneResult1)
 ```
 Select the best model out of 1100 trained models and compute RMSE
-```r
+```{r}
 Find out the best model
 BstModel=tuneResult1$best.model
 summary()
@@ -276,16 +276,16 @@ nagelkerke(BstModel)
 rsq(BstModel)
 ```
 Predict Y using best model
-```r
+```{r}
 PredYBst=predict(BstModel,pr_test)
 ```
 library(hydroGOF)
 Calculate RMSE of the best model
-```r
+```{r}
 RMSEBst=rmse(PredYBst, validation$Age)
 ```
 Calculate parameters of the Best SVR model
-```r
+```{r}
 lsvm_resvalue <- data.frame(Actual = validation$Age,Predicted = PredYBst)
 plot(lsvm_resvalue, main = "SVM model- Predicted Vs Actual values of Age")
 ggplot(lsvm_resvalue, aes(x=`Actual`, y= Predicted, label=Predicted)) +
@@ -296,16 +296,16 @@ ggplot(lsvm_resvalue, aes(x=`Actual`, y= Predicted, label=Predicted)) +
   labs(subtitle="Normalised mileage from 'mtcars'",
        title= "Diverging Bars") +
   coord_flip()
-```r
+```{r}
 Ensembling
-```r
+```{r}
 library(mlbench)
 library(caret)
 library(caretEnsemble)
 predDF <- data.frame(lm_res, result, PredYBst, Age = validation$Age)
 ```
 Train the ensemble
-```r
+```{r}
 modelStack <- train(Age ~ ., data = predDF, method = "rf")
 plot(modelStack)
 
@@ -319,7 +319,7 @@ testPredlm <- predict(pca_lm, test)
 testPredsvm <- predict(BstModel, test)
 ```
 Using the base learner test set predictions,create the level-one dataset to feed to the ensemble
-```r
+```{r}
 testPredLevelOne <- data.frame(testPredrf, testPredlm, testPredsvm, Age = test$Age)
 combPred <- predict( modelStack, validation$Age)
 
@@ -330,7 +330,7 @@ ensem_MSE
 ```
 
 Tuning parameters
-```r
+```{r}
 control <- trainControl(method="repeatedcv", number=10, repeats=3, savePredictions=TRUE, classProbs=TRUE)
 algorithmList <- c('lda', 'rpart', 'lm', 'knn', 'svmRadial')
 set.seed(12345)
@@ -345,20 +345,20 @@ splom(results1)
 ```
 
 Cluster Analysis
-```r
+```{r}
 df2=data.frame(young2$Questionnaires.or.polls,young2$Mood.swings,young2$Elections,young2$Foreign.languages,young2$Age)
 dat2 <- df2[1:100, ]
 clus2<- kmeans(dat2, centers=2)
 ```
 finding k value
-```r
+```{r}
 kn <- NbClust(dat2, min.nc=2, max.nc=15, method="kmeans")
 fviz_cluster(clus2, data = dat2)
 clus2
 ```
 
 Logistic Regression
-```r
+```{r}
 pr_train$Age5 <- cut(pr_train$Age, breaks = c(14, 19, 30), labels = c(0, 1))
 pr_train$Age <- NULL
 pr_test <- data.frame(Age=pca_test$Age,young5$x)
@@ -371,7 +371,7 @@ matrix = confusion.matrix(pr_test$Age5, pca_lr.probs,threshold=0.2)
 matrix
 AccuMeasures = accuracy(pr_test$Age5,pca_lr.probs,threshold=0.2)
 ```
-```r
+```{r}
 print and plot the accuracy vs cutoff threshold values
 print(c(accuracy= acc, cutoff = thresh))
 plot(thresh,acc,type="l",xlab="Threshold",ylab="Accuracy", main="Validation Accuracy for Different Threshold Values")
@@ -383,7 +383,7 @@ library(ROCR)
 young8_scores <- prediction(predictions=mydf$young8.probs, labels=mydf$Age5)
 ```
 PLOT ROC CURVE
-```r
+```{r}
 young8_perf <- performance(young8_scores, "tpr", "fpr")
 
 plot(young8_perf,
@@ -395,12 +395,12 @@ abline(0,1, lty = 300, col = "green",  lwd = 3)
 grid(col="aquamarine")
 ```
 AREA UNDER THE CURVE
-```r
+```{r}
 young8_auc <- performance(young8_scores, "auc")
 as.numeric(young8_auc@y.values)  ##AUC Value
 ```
 Gain Chart
-```r
+```{r}
 gain <- performance(young8_scores, "tpr", "rpp")
 plot(gain, main = "Gain Chart")
 ```

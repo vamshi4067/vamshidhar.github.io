@@ -154,7 +154,7 @@ Changing the last layer so that it can be used for binary classification i.e inf
 ```python
 pretr_model.fc = nn.Linear(512,2)
 ```
-# Turning on learning for parameters in last layer only
+Turning on learning for parameters in last layer only
 ```python
 for params in pretr_model.parameters():
     params.requires_grad = False
@@ -330,5 +330,3 @@ def visualize(model,num_images=10):
                     model.train(mode=was_training)
                     return
 ```
-
-visualize(pretr_model)
