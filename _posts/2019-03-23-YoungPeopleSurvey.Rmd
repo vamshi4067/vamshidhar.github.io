@@ -7,11 +7,11 @@ tag: [R]
 # Predictive modelling on Youngster's Age
 Reading the data
 
-```{r}
+```{r, echo=TRUE}
 young <- read.csv(file.choose(),na.strings = c('',"NA"))
 ```
 Understanding the Data
-```{r}
+```{r, echo=TRUE}
 summary(young)
 sum(is.na(young))
 na.omit(young)
