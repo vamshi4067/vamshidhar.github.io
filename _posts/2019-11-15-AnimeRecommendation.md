@@ -1,7 +1,7 @@
 ---
 title: "Anime Recommendation"
 date: 2019-08-15
-
+tag: [Machine Learning]
 ---
 
 # Created a recommendation system using K-Nearest Neighbor.

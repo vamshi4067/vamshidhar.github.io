@@ -188,7 +188,7 @@ def train(n_epochs, model, optimizer, criterion, use_cuda,save_path):
         train_loss = 0.0
         valid_loss = 0.0
 
-        # train the model #
+        #train the model
         model.train()
         for batch_idx, (data, target) in enumerate(train_loader):
             # move to GPU
@@ -215,7 +215,7 @@ def train(n_epochs, model, optimizer, criterion, use_cuda,save_path):
                 print('Epoch %d, Batch %d loss: %.6f' %
                   (epoch, batch_idx + 1, train_loss))
 
-        # validate the model #
+        # validate the model
         model.eval()
         for batch_idx, (data, target) in enumerate(valid_loader):
             # move to GPU
@@ -243,8 +243,9 @@ def train(n_epochs, model, optimizer, criterion, use_cuda,save_path):
 
     # return trained model
     return model
-    ```
+```
 Training the model
+
 ```python
 train(2,pretr_model,optimizer_ft,criterion,use_gpu,'trained_model')
 Epoch 1, Batch 1 loss: 0.721161
