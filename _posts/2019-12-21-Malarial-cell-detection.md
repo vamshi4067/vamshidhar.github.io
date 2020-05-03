@@ -291,8 +291,6 @@ def test(model, criterion, use_cuda):
         100. * correct / total, correct, total))
 test(pretr_model, criterion, use_gpu)
 Test Loss: 0.400527
-
-
 Test Accuracy: 83% (6887/8268)
 ```
 Visualize 10 predictions
@@ -313,8 +311,6 @@ def visualize(model,num_images=10):
     was_training = model.training
     model.eval()
     images = 0
-
-
     with torch.no_grad():
         for batch_idx, (data, target) in enumerate(test_loader):
         # move to GPU
@@ -333,5 +329,6 @@ def visualize(model,num_images=10):
                 if images == num_images:
                     model.train(mode=was_training)
                     return
+```
 
 visualize(pretr_model)
