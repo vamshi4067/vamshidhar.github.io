@@ -1,7 +1,7 @@
 ---
 title: "Malaria cell Detection"
 date: 2019-12-21
-tag: [Deep Learning,PyTorch]
+tag: [Deep Learning]
 ---
 # Detecting the cells effected from malaria using Deep Learning
 
