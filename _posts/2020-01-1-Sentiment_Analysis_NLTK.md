@@ -4,7 +4,7 @@ date: 2020-01-13
 tag: [NLP]
 ---
 
-# Sentiment Analysis of a text in the email using NLTK.
+# *Sentiment Analysis of a text in the email using NLTK.*
 
 Importing the libraries
 
