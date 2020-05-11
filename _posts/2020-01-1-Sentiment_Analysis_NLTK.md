@@ -42,7 +42,6 @@ for i,lb,rv in df.itertuples():
             blank.append(i)
 ```
 ```python
-
 def sentiment_analysis(text):
     score = senti.polarity_scores(text)
     if score["compound"] == 0:
