@@ -6,7 +6,7 @@ author_profile: true
 
 header:
 
-  overlay_image: "images/images.jpeg"
+  overlay_image: "images/pic.jpeg"
 ---
 
 I am currently pursuing my Master's in Data Analytics Engineering at George Mason University.I am a Data Science Enthusiast and
